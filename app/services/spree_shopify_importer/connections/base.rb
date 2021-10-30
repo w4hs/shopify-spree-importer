@@ -18,12 +18,13 @@ module SpreeShopifyImporter
         private
 
         def find_in_batches(**opts)
-          opts = { page: 1 }.merge(opts)
+          params = { limit: 10 }.merge!(opts)
+          batch = api_class.find(:all, params: params)
+
           loop do
-            batch = api_class.find(:all, params: opts)
-            break if batch.blank?
+            break unless batch.next_page?
+            batch = batch.fetch_next_page
             yield batch
-            opts[:page] += 1
           end
         end
 

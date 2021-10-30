@@ -21,7 +21,15 @@ module SpreeShopifyImporter
         private
 
         def update_spree_image
-          @spree_image.update!(attributes_with_attachement)
+          @_spree_image = @spree_image.is_a?(Spree::Asset) ? @spree_image.viewable.images.new : @spree_image
+          
+          @_spree_image.assign_attributes(attributes_with_attachement.except(:attachment))
+          
+          @_spree_image.attachment.attach(
+            io:       attachment,
+            filename: attributes_with_attachement[:alt]
+          )
+          @_spree_image.save!
         end
       end
     end

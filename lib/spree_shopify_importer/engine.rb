@@ -3,9 +3,9 @@ module SpreeShopifyImporter
     require 'spree/core'
     isolate_namespace Spree
     engine_name 'spree_shopify_importer'
-
+    
     config.autoload_paths += %W[#{config.root}/lib #{config.root}/app/services]
-
+    
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

@@ -8,7 +8,9 @@ module SpreeShopifyImporter
         private
 
         def add_option_values
-          @spree_variant.assign_attributes(option_value_ids: option_value_ids)
+          if option_value_ids.compact.present?
+            @spree_variant.assign_attributes(option_value_ids: option_value_ids.compact)
+          end
         end
 
         def set_stock_data

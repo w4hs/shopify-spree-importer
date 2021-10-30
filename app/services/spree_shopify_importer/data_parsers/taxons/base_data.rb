@@ -19,6 +19,10 @@ module SpreeShopifyImporter
             SpreeShopifyImporter::DataFeed
             .where(shopify_object_id: collection_product_ids, shopify_object_type: 'ShopifyAPI::Product')
             .pluck(:spree_object_id)
+          
+          @product_ids.select do |product_id|
+            Spree::Product.exists?(id: product_id)
+          end
         end
 
         def taxonomy

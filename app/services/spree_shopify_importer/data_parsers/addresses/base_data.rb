@@ -24,6 +24,10 @@ module SpreeShopifyImporter
         # rubocop:enable Metrics/MethodLength
 
         private
+          
+          def default_country
+            @default_country ||= Spree::Country.find_by(iso_name: 'Bangladesh')
+          end
 
         def country
           @country ||= find_country || create_country
@@ -34,9 +38,12 @@ module SpreeShopifyImporter
         end
 
         def create_country
+          return default_country if country_name.blank?
+
           Spree::Country.create!(iso: iso,
                                  name: country_name,
-                                 iso_name: country_name.upcase)
+                                 iso_name: country_name.upcase
+          )
         end
 
         def iso

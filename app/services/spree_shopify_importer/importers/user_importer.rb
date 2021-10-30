@@ -2,6 +2,8 @@ module SpreeShopifyImporter
   module Importers
     class UserImporter < BaseImporter
       def import!
+        return if @resource.nil?
+  
         data_feed = process_data_feed
         return if shopify_object.email.blank?
 

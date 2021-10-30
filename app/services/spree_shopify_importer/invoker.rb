@@ -18,6 +18,8 @@ module SpreeShopifyImporter
     end
 
     def import!
+      ShopifyAPI::Base.api_version = '2021-01'
+  
       connect
 
       initiate_import!
